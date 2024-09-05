@@ -22,7 +22,8 @@
             @foreach($qrcodes as $qrcode)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
-                    <td><img src="{{ asset($qrcode->image_path) }}" alt="QR Code" width="100"></td>
+                    <td><img src="{{ asset('storage/' . $qrcode->image_path) }}" alt="QR Code" width="100"></td>
+
                     <td>
                         <!-- Edit button -->
                         <button class="btn btn-warning" data-toggle="modal" data-target="#editQRCodeModal{{ $qrcode->id }}">

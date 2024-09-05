@@ -167,7 +167,9 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <img src="{{ asset('path-to-your-qris-image') }}" alt="QRIS Code" class="img-fluid" id="qris-image">
+                @foreach ($qrcodes as $object)
+                <img src="{{ asset('storage/' . $object->image_path) }}" alt="QR Code Image" class="img-fluid"></td>
+                @endforeach
                 <button type="button" class="btn btn-success mt-3" onclick="completeTransaction()">Transaksi Selesai</button>
             </div>
         </div>

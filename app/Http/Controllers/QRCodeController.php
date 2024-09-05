@@ -9,25 +9,33 @@ use Illuminate\Support\Facades\Storage;
 class QRCodeController extends Controller
 {
     // Display the list of QR codes
+    // Display the list of QR codes
     public function index() {
         $qrcodes = QRCode::all();
         return view('qrcode.index', compact('qrcodes'));
     }
 
     // Store a new QR code
-    public function store(Request $request) {
-        $request->validate([
-            'qrcode_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+    public function store(Request $request)
+{
+    // Validasi input
+    $request->validate([
+        'qrcode_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+    ]);
 
+    // Menyimpan gambar ke disk 'public'
+    if ($request->hasFile('qrcode_image')) {
         $imagePath = $request->file('qrcode_image')->store('qrcodes', 'public');
-
-        QRCode::create([
-            'image_path' => $imagePath,
-        ]);
-
-        return redirect()->route('qrcode.index')->with('success', 'QR Code added successfully.');
     }
+
+    // Simpan path gambar ke database
+    QRCode::create([
+        'image_path' => $imagePath,
+    ]);
+
+    return redirect()->route('qrcode.index')->with('success', 'QR Code added successfully.');
+}
+
 
     // Update an existing QR code
     public function update(Request $request, $id) {
@@ -48,6 +56,7 @@ class QRCodeController extends Controller
 
         return redirect()->route('qrcode.index')->with('success', 'QR Code updated successfully.');
     }
+
 
     // Delete a QR code
     public function destroy($id) {

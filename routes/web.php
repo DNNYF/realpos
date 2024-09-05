@@ -83,8 +83,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/transaksi/{id}/data', [PenjualanDetailController::class, 'data'])->name('transaksi.data');
         Route::get('/transaksi/loadform/{diskon}/{total}/{diterima}', [PenjualanDetailController::class, 'loadForm'])->name('transaksi.load_form');
-        Route::resource('/transaksi', PenjualanDetailController::class)
-            ->except('create', 'show', 'edit');
+
+        Route::resource('/transaksi', PenjualanDetailController::class);
+
     });
 
     Route::group(['middleware' => 'level:1'], function () {
