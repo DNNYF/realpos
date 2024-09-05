@@ -41,7 +41,7 @@
     <div class="col-lg-12">
         <div class="box">
             <div class="box-body">
-                    
+
                 <form class="form-produk">
                     @csrf
                     <div class="form-group row">
@@ -106,8 +106,8 @@
                             <div class="form-group row">
                                 <label for="diskon" class="col-lg-2 control-label">Diskon</label>
                                 <div class="col-lg-8">
-                                    <input type="number" name="diskon" id="diskon" class="form-control" 
-                                        value="{{ ! empty($memberSelected->id_member) ? $diskon : 0 }}" 
+                                    <input type="number" name="diskon" id="diskon" class="form-control"
+                                        value="{{ ! empty($memberSelected->id_member) ? $diskon : 0 }}"
                                         readonly>
                                 </div>
                             </div>
@@ -135,8 +135,45 @@
             </div>
 
             <div class="box-footer">
-                <button type="submit" class="btn btn-primary btn-sm btn-flat pull-right btn-simpan"><i class="fa fa-floppy-o"></i> Simpan Transaksi</button>
+                <button type="button" class="btn btn-primary btn-sm btn-flat pull-right btn-simpa" onclick="showPaymentOptions()">
+                    <i class="fa fa-floppy-o"></i> Simpan Transaksi
+                </button>
             </div>
+<!-- Payment Options Modal -->
+<div class="modal fade" id="modal-payment-options" tabindex="-1" role="dialog" aria-labelledby="paymentOptionsLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentOptionsLabel">Pilih Metode Pembayaran</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="btn btn-success" onclick="payWithQRIS()">Bayar dengan QRIS</button>
+                <button type="button" class="btn btn-primary" onclick="payWithCash()">Bayar Cash</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- QRIS Payment Modal -->
+<div class="modal fade" id="modal-qris" tabindex="-1" role="dialog" aria-labelledby="qrisLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="qrisLabel">Pembayaran QRIS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ asset('path-to-your-qris-image') }}" alt="QRIS Code" class="img-fluid" id="qris-image">
+                <button type="button" class="btn btn-success mt-3" onclick="completeTransaction()">Transaksi Selesai</button>
+            </div>
+        </div>
+    </div>
+</div>
+
         </div>
     </div>
 </div>
@@ -317,5 +354,26 @@
                 return;
             })
     }
+
+    function showPaymentOptions() {
+    $('#modal-payment-options').modal('show');
+}
+
+function payWithQRIS() {
+    $('#modal-payment-options').modal('hide');
+    $('#modal-qris').modal('show');
+}
+
+function payWithCash() {
+    // Complete the transaction immediately with Cash
+    $('.form-penjualan').submit();
+}
+
+function completeTransaction() {
+    $('#modal-qris').modal('hide');
+    // Complete the transaction after QRIS payment
+    $('.form-penjualan').submit();
+}
+
 </script>
 @endpush

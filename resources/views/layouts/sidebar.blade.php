@@ -12,7 +12,7 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
-        
+
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
@@ -44,6 +44,12 @@
                     <i class="fa fa-truck"></i> <span>Supplier</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('qrcode.index') }}">
+                    <i class="fa fa-qrcode"></i> <span>Manage QR Code</span>
+                </a>
+            </li>
+
             <li class="header">TRANSAKSI</li>
             <li>
                 <a href="{{ route('pengeluaran.index') }}">
